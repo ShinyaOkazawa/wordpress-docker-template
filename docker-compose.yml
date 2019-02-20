@@ -1,6 +1,7 @@
 version: '2'
 services:
   wordpress:
+    env_file: .env
     image: wordpress:5.0.3-php7.1-apache
     mem_limit: 256m
     depends_on:
@@ -11,18 +12,11 @@ services:
       - mysql:mysql
     volumes:
       - ./wp:/var/www/html
-    environment:
-      WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: password
-      WORDPRESS_DB_NAME: wordpress
   mysql:
+    env_file: .env
     image: mysql:5.7
     mem_limit: 256m
     ports:
       - 3306:3306
     volumes:
       - ./sql:/docker-entrypoint-initdb.d:rw
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_ROOT_PASSWORD: password
